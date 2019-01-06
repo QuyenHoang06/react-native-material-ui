@@ -8,6 +8,7 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   Animated,
+  Easing,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { ViewPropTypes } from '../utils';
@@ -178,7 +179,10 @@ class ActionButton extends PureComponent {
   constructor(props) {
     super(props);
 
-    this.state = { render: 'button' };
+    this.state = {
+      render: 'button',
+      scaleValue: new Animated.Value(props.hidden ? 0 : 1)
+    };
   }
 
   componentWillReceiveProps(nextProps) {
@@ -249,23 +253,23 @@ class ActionButton extends PureComponent {
   };
 
   show = () => {
-    // Animated.timing(this.state.scaleValue, {
-    //     toValue: 1,
-    //     duration: 225,
-    //     easing: Easing.bezier(0.0, 0.0, 0.2, 1),
-    //     useNativeDriver: true,
-    // }).start();
+    Animated.timing(this.state.scaleValue, {
+        toValue: 1,
+        duration: 225,
+        easing: Easing.bezier(0.0, 0.0, 0.2, 1),
+        useNativeDriver: true,
+    }).start();
   };
 
   hide = () => {
-    // Animated.timing(this.state.scaleValue, {
-    //     // TODO: why is not 0 here?
-    //     // see: https://github.com/facebook/react-native/issues/10510
-    //     toValue: 0.01,
-    //     duration: 195,
-    //     easing: Easing.bezier(0.4, 0.0, 0.6, 1),
-    //     useNativeDriver: true,
-    // }).start();
+    Animated.timing(this.state.scaleValue, {
+        // TODO: why is not 0 here?
+        // see: https://github.com/facebook/react-native/issues/10510
+        toValue: 0,
+        duration: 195,
+        easing: Easing.bezier(0.4, 0.0, 0.6, 1),
+        useNativeDriver: true,
+    }).start();
   };
 
   renderToolbarTransition = styles => {
@@ -461,7 +465,7 @@ class ActionButton extends PureComponent {
   };
 
   renderButton = styles => (
-    <Animated.View style={styles.positionContainer}>
+    <Animated.View style={[styles.positionContainer, { transform: [{ scale: this.state.scaleValue }] }]}>
       {this.renderMainButton(styles)}
     </Animated.View>
   );
