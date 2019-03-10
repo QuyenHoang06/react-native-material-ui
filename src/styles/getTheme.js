@@ -28,7 +28,36 @@ function darkenOrLighten(color, ratio = 0.15) {
 export default function getTheme(theme, ...more) {
   let mergedTheme = merge(lightTheme, theme, ...more);
 
-  const { iconSet, spacing, fontFamily, typography, palette } = mergedTheme;
+  const {
+    iconSet, spacing, fontFamily, typography, palette, 
+    actionButton,
+    avatar,
+    badge,
+    button,
+    buttonDisabled,
+    buttonFlat,
+    buttonRaised,
+    buttonRaisedDisabled,
+    bottomNavigation,
+    bottomNavigationAction,
+    card,
+    dialog,
+    checkbox,
+    divider,
+    drawer,
+    drawerHeader,
+    drawerHeaderAccount,
+    drawerHeaderListItem,
+    drawerSection,
+    drawerSectionActiveItem,
+    iconToggle,
+    listItem,
+    snackbar,
+    subheader,
+    toolbar,
+    toolbarSearchActive,
+    ...components
+  } = mergedTheme;
   const baseTheme = {
     iconSet,
     spacing,
@@ -36,6 +65,13 @@ export default function getTheme(theme, ...more) {
     typography,
     palette,
   };
+
+  const cmps = Object.keys(components).reduce((prev, current) => {
+    prev[current] = StyleSheet.create({
+      ...components[current]
+    });
+    return prev;
+  }, {})
 
   mergedTheme = merge(
     {
@@ -115,7 +151,7 @@ export default function getTheme(theme, ...more) {
               color: white,
             },
           },
-          mergedTheme.actionButton,
+          actionButton,
         ),
       ),
       // https://material.google.com/layout/metrics-keylines.html#metrics-keylines-touch-target-size
@@ -137,7 +173,7 @@ export default function getTheme(theme, ...more) {
               color: palette.canvasColor,
             },
           },
-          mergedTheme.avatar,
+          avatar,
         ),
       ),
       badge: StyleSheet.create(
@@ -167,7 +203,7 @@ export default function getTheme(theme, ...more) {
               fontSize: 12,
             },
           },
-          mergedTheme.badge,
+          badge,
         ),
       ),
       button: StyleSheet.create(
@@ -189,10 +225,10 @@ export default function getTheme(theme, ...more) {
               marginRight: 8,
             },
           },
-          mergedTheme.button,
+          button,
         ),
       ),
-      buttonFlat: StyleSheet.create(merge({}, mergedTheme.buttonFlat)),
+      buttonFlat: StyleSheet.create(merge({}, buttonFlat)),
       buttonDisabled: StyleSheet.create(
         merge(
           {
@@ -200,7 +236,7 @@ export default function getTheme(theme, ...more) {
               color: palette.disabledTextColor,
             },
           },
-          mergedTheme.buttonDisabled,
+          buttonDisabled,
         ),
       ),
       buttonRaised: StyleSheet.create(
@@ -211,7 +247,7 @@ export default function getTheme(theme, ...more) {
               borderColor: 'rgba(0,0,0,.12)',
             },
           },
-          mergedTheme.buttonRaised,
+          buttonRaised,
         ),
       ),
       buttonRaisedDisabled: StyleSheet.create(
@@ -224,7 +260,7 @@ export default function getTheme(theme, ...more) {
               color: palette.disabledTextColor,
             },
           },
-          mergedTheme.buttonRaisedDisabled,
+          buttonRaisedDisabled,
         ),
       ),
       bottomNavigation: StyleSheet.create(
@@ -243,7 +279,7 @@ export default function getTheme(theme, ...more) {
               justifyContent: 'center',
             },
           },
-          mergedTheme.bottomNavigation,
+          bottomNavigation,
         ),
       ),
       bottomNavigationAction: StyleSheet.create(
@@ -276,7 +312,7 @@ export default function getTheme(theme, ...more) {
               fontSize: 14,
             },
           },
-          mergedTheme.bottomNavigationAction,
+          bottomNavigationAction,
         ),
       ),
       card: StyleSheet.create(
@@ -291,7 +327,7 @@ export default function getTheme(theme, ...more) {
               ...getPlatformElevation(2),
             },
           },
-          mergedTheme.card,
+          card,
         ),
       ),
       dialog: StyleSheet.create(
@@ -330,7 +366,7 @@ export default function getTheme(theme, ...more) {
               marginBottom: 8,
             },
           },
-          mergedTheme.dialog,
+          dialog,
         ),
       ),
       checkbox: StyleSheet.create(
@@ -350,7 +386,7 @@ export default function getTheme(theme, ...more) {
               flex: 1,
             },
           },
-          mergedTheme.checkbox,
+          checkbox,
         ),
       ),
       divider: StyleSheet.create(
@@ -361,7 +397,7 @@ export default function getTheme(theme, ...more) {
               height: StyleSheet.hairlineWidth,
             },
           },
-          mergedTheme.divider,
+          divider,
         ),
       ),
       drawer: StyleSheet.create(
@@ -372,7 +408,7 @@ export default function getTheme(theme, ...more) {
               backgroundColor: white,
             },
           },
-          mergedTheme.drawer,
+          drawer,
         ),
       ),
       drawerHeader: StyleSheet.create(
@@ -389,7 +425,7 @@ export default function getTheme(theme, ...more) {
               height: 150,
             },
           },
-          mergedTheme.drawerHeader,
+          drawerHeader,
         ),
       ),
       drawerHeaderAccount: StyleSheet.create(
@@ -418,7 +454,7 @@ export default function getTheme(theme, ...more) {
               paddingLeft: 8,
             },
           },
-          mergedTheme.drawerHeaderAccount,
+          drawerHeaderAccount,
         ),
       ),
       drawerHeaderListItem: StyleSheet.create(
@@ -428,7 +464,7 @@ export default function getTheme(theme, ...more) {
               backgroundColor: transparent,
             },
           },
-          mergedTheme.drawerHeaderListItem,
+          drawerHeaderListItem,
         ),
       ),
       drawerSection: StyleSheet.create(
@@ -461,7 +497,7 @@ export default function getTheme(theme, ...more) {
               top: 2,
             },
           },
-          mergedTheme.drawerSection,
+          drawerSection,
         ),
       ),
       drawerSectionActiveItem: StyleSheet.create(
@@ -478,7 +514,7 @@ export default function getTheme(theme, ...more) {
               color: palette.primaryColor,
             },
           },
-          mergedTheme.drawerSectionActiveItem,
+          drawerSectionActiveItem,
         ),
       ),
       iconToggle: StyleSheet.create(
@@ -494,7 +530,7 @@ export default function getTheme(theme, ...more) {
               color: palette.secondaryTextColor,
             },
           },
-          mergedTheme.iconToggle,
+          iconToggle,
         ),
       ),
       listItem: StyleSheet.create(
@@ -551,7 +587,7 @@ export default function getTheme(theme, ...more) {
               color: palette.secondaryTextColor,
             },
           },
-          mergedTheme.listItem,
+          listItem,
         ),
       ),
       // https://material.io/design/components/snackbars.html
@@ -589,7 +625,7 @@ export default function getTheme(theme, ...more) {
               color: palette.primaryColor,
             },
           },
-          mergedTheme.snackbar,
+          snackbar,
         ),
       ),
       // https://material.google.com/components/subheaders.html#
@@ -606,7 +642,7 @@ export default function getTheme(theme, ...more) {
               ...typography.body2,
             },
           },
-          mergedTheme.subheader,
+          subheader,
         ),
       ),
       toolbar: StyleSheet.create(
@@ -668,11 +704,12 @@ export default function getTheme(theme, ...more) {
               color: palette.secondaryTextColor,
             },
           },
-          mergedTheme.toolbarSearchActive,
+          toolbarSearchActive,
         ),
       ),
     },
     baseTheme,
+    cmps
   );
 
   return mergedTheme;
